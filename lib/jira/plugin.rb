@@ -73,7 +73,7 @@ module Danger
       jira_issues = []
 
       if search_title
-        github.pr_title.gsub(regexp) do |match|
+        bitbucket_cloud.pr_title.gsub(regexp) do |match|
           jira_issues << match
         end
       end
@@ -87,7 +87,7 @@ module Danger
       end
 
       if jira_issues.empty?
-        github.pr_body.gsub(regexp) do |match|
+        bitbucket_cloud.pr_body.gsub(regexp) do |match|
           jira_issues << match
         end
       end
@@ -99,12 +99,12 @@ module Danger
       regexp = Regexp.new("no-jira", true)
 
       if search_title
-        github.pr_title.gsub(regexp) do |match|
+        bitbucket_cloud.pr_title.gsub(regexp) do |match|
           return true unless match.empty?
         end
       end
 
-      github.pr_body.gsub(regexp) do |match|
+      bitbucket_cloud.pr_body.gsub(regexp) do |match|
         return true unless match.empty?
       end
 
@@ -117,7 +117,7 @@ module Danger
     end
 
     def link(href: nil, issue: nil)
-      return "<a href='#{href}#{issue}'>#{issue}</a>"
+      return "[#{issue}](#{href}#{issue})"
     end
   end
 end
